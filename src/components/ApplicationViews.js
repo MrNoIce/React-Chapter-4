@@ -2,7 +2,7 @@ import { Route } from 'react-router-dom'
 import React, { Component } from "react"
 import LocationList from './location/LocationList'
 import EmployeeList from './employee/EmployeeList'
-
+import AnimalList from './Animals/AnimalList'
 
 class ApplicationViews extends Component {
     employeesFromAPI = [
@@ -14,7 +14,8 @@ class ApplicationViews extends Component {
 
     locationsFromAPI = [
         { id: 1, name: "Nashville North", address: "500 Circle Way" },
-        { id: 2, name: "Nashville South", address: "10101 Binary Court" }
+        { id: 2, name: "Nashville South", address: "10101 Binary Court" },
+        { id: 3, name: "Nashville Easty", address: "420 Blaze Trail"}
     ]
 
     animalsFromAPI = [
@@ -36,12 +37,15 @@ class ApplicationViews extends Component {
         return (
             <React.Fragment>
                 <Route exact path="/" render={(props) => {
-                    console.log("props: ", props);
-                    console.log("this.props: ", this.props);
+                    // console.log("props: ", props);
+                    // console.log("this.props: ", this.props);
                     return <LocationList locations={this.state.locations} />
                 }} />
                 <Route path="/employees" render={(props) => {
                     return <EmployeeList employees={this.state.employees} />
+                }} />
+                <Route path="/animals" render={(props) => {
+                    return <AnimalList animals={this.state.animals} />
                 }} />
             </React.Fragment>
         )
