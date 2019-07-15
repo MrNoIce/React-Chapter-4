@@ -1,0 +1,77 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "name": "Jessica Younker"
+    },
+    {
+      "id": 2,
+      "name": "Jordan Nelson"
+    },
+    {
+      "id": 3,
+      "name": "Zoe LeBlanc"
+    },
+    {
+      "id": 4,
+      "name": "Blaise Roberts"
+    }
+  ],
+  "locations": [
+    {
+      "id": 1,
+      "name": "Nashville North",
+      "address": "500 Circle Way"
+    },
+    {
+      "id": 2,
+      "name": "Nashville South",
+      "address": "10101 Binary Court"
+    },
+    {
+      "id": 3,
+      "name": "Nashville Easty",
+      "address": "420 Blaze Trail"
+    }
+  ],
+  "animals": [
+    {
+      "id": 3,
+      "name": "Angus"
+    },
+    {
+      "id": 4,
+      "name": "Henley"
+    },
+    {
+      "id": 5,
+      "name": "Derkins"
+    },
+    {
+      "id": 6,
+      "name": "Checkers"
+    }
+  ],
+  "owners": [
+    {
+      "id": 1,
+      "name": "Terry Tomlin",
+      "phone": "615-668-9954"
+    },
+    {
+      "id": 2,
+      "name": "Susan Susie",
+      "phone": "615-668-9954"
+    },
+    {
+      "id": 3,
+      "name": "Jack Jackson",
+      "phone": "615-668-9954"
+    },
+    {
+      "id": 4,
+      "name": "Sally Sindy",
+      "phone": "615-668-9954"
+    }
+  ]
+}
