@@ -8,6 +8,8 @@ import AnimalDetail from "./Animals/animalDetail";
 import OwnerList from "./Owners/ownerList";
 import AnimalManager from "../Modules/AnimalManager";
 import employeeManager from "./employee/employeeManager";
+import AnimalForm from "./Animals/AnimalForm";
+import Employee from "./employee/employeeDetail";
 
 class ApplicationViews extends Component {
   state = {
@@ -54,6 +56,15 @@ class ApplicationViews extends Component {
       });
   };
 
+  addAnimal = animal =>
+    AnimalManager.post(animal)
+      .then(() => AnimalManager.getAll())
+      .then(animals =>
+        this.setState({
+          animals: animals
+        })
+      );
+
   render() {
     return (
       <React.Fragment>
@@ -65,6 +76,18 @@ class ApplicationViews extends Component {
           }}
         />
         <Route
+          path="/animals/new"
+          render={props => {
+            return (
+              <AnimalForm
+                {...props}
+                addAnimal={this.addAnimal}
+                employees={this.state.employees}
+              />
+            );
+          }}
+        />
+        <Route exact
           path="/employees"
           render={props => {
             return (
@@ -76,11 +99,28 @@ class ApplicationViews extends Component {
           }}
         />
         <Route
+          path="/employees/:employeeId(\d+)"
+          render={props => {
+            let employee = this.state.employees.find(
+              employee =>
+                employee.id === parseInt(props.match.params.employeeId)
+            );
+            if (!employee) {
+              employee = { id: 404, name: "404", employee: "No one" };
+            }
+
+            return (
+              <Employee employee={employee} fireEmployee={this.fireEmployee} />
+            );
+          }}
+        />
+        <Route
           exact
           path="/animals"
-          render={() => {
+          render={props => {
             return (
               <AnimalList
+                {...props}
                 deleteAnimal={this.deleteAnimal}
                 animals={this.state.animals}
               />
