@@ -1,11 +1,15 @@
 import { Route } from "react-router-dom";
 import React, { Component } from "react";
+import { withRouter } from "react-router";
 import LocationList from "./location/LocationList";
 import EmployeeList from "./employee/EmployeeList";
 import AnimalList from "./Animals/AnimalList";
+import AnimalDetail from "./Animals/animalDetail";
 import OwnerList from "./Owners/ownerList";
+import AnimalManager from "../Modules/AnimalManager";
+import employeeManager from "./employee/employeeManager";
 
-export default class ApplicationViews extends Component {
+class ApplicationViews extends Component {
   state = {
     locations: [],
     animals: [],
@@ -32,14 +36,22 @@ export default class ApplicationViews extends Component {
     return fetch(`http://localhost:5002/animals/${id}`, {
       method: "DELETE"
     })
-      .then(e => e.json())
-      .then(() => fetch(`http://localhost:5002/animals`))
-      .then(e => e.json())
-      .then(animals =>
-        this.setState({
-          animals: animals
-        })
-      );
+      .then(AnimalManager.getAll)
+      .then(animals => {
+        this.props.history.push("/animals");
+        this.setState({ animals: animals });
+      });
+  };
+
+  fireEmployee = id => {
+    return fetch(`http://localhost:5002/employees/${id}`, {
+      method: "DELETE"
+    })
+      .then(employeeManager.getAll)
+      .then(employees => {
+        this.props.history.push("/employees");
+        this.setState({ employees: employees });
+      });
   };
 
   render() {
@@ -49,15 +61,18 @@ export default class ApplicationViews extends Component {
           exact
           path="/"
           render={props => {
-            // console.log("props: ", props);
-            // console.log("this.props: ", this.props);
             return <LocationList locations={this.state.locations} />;
           }}
         />
         <Route
           path="/employees"
           render={props => {
-            return <EmployeeList employees={this.state.employees} />;
+            return (
+              <EmployeeList
+                fireEmployee={this.fireEmployee}
+                employees={this.state.employees}
+              />
+            );
           }}
         />
         <Route
@@ -73,6 +88,26 @@ export default class ApplicationViews extends Component {
           }}
         />
         <Route
+          path="/animals/:animalId(\d+)"
+          render={props => {
+            // Find the animal with the id of the route parameter
+            let animal = this.state.animals.find(
+              animal => animal.id === parseInt(props.match.params.animalId)
+            );
+            // If the animal wasn't found, create a default one
+            if (!animal) {
+              animal = { id: 404, name: "404", breed: "Dog not found" };
+            }
+
+            return (
+              <AnimalDetail
+                animal={animal}
+                dischargeAnimal={this.deleteAnimal}
+              />
+            );
+          }}
+        />
+        <Route
           path="/owners"
           render={props => {
             return <OwnerList owners={this.state.owners} />;
@@ -82,3 +117,5 @@ export default class ApplicationViews extends Component {
     );
   }
 }
+
+export default withRouter(ApplicationViews);
