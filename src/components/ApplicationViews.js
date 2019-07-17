@@ -11,6 +11,7 @@ import employeeManager from "./employee/employeeManager";
 import AnimalForm from "./Animals/AnimalForm";
 import Login from "./authentication/Login";
 import Employee from "./employee/employeeDetail";
+import LocationDetails from "./location/LocationDetails"
 
 class ApplicationViews extends Component {
   state = {
@@ -76,6 +77,22 @@ class ApplicationViews extends Component {
           path="/"
           render={props => {
             return <LocationList locations={this.state.locations} />;
+          }}
+        />
+        <Route
+          path="/locations/:locationId(\d+)"
+          render={props => {
+            let location = this.state.locations.find(
+              location =>
+                location.id === parseInt(props.match.params.locationId)
+            );
+            if (!location) {
+              location = { id: 404, name: "404", location: "No one" };
+            }
+
+            return (
+              <LocationDetails location={location} />
+            );
           }}
         />
         <Route

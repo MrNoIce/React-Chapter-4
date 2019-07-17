@@ -37,17 +37,20 @@
     {
       "id": 1,
       "name": "Nashville North",
-      "address": "500 Circle Way"
+      "address": "500 Circle Way",
+      "phone": "615-668-9954"
     },
     {
       "id": 2,
       "name": "Nashville South",
-      "address": "10101 Binary Court"
+      "address": "10101 Binary Court",
+      "phone": "615-668-9954"
     },
     {
       "id": 3,
       "name": "Nashville Easty",
-      "address": "420 Blaze Trail"
+      "address": "420 Blaze Trail",
+      "phone": "615-668-9954"
     }
   ],
   "animals": [
