@@ -11,7 +11,7 @@ import employeeManager from "./employee/employeeManager";
 import AnimalForm from "./Animals/AnimalForm";
 import Login from "./authentication/Login";
 import Employee from "./employee/employeeDetail";
-import LocationDetails from "./location/LocationDetails"
+import LocationDetails from "./location/LocationDetails";
 
 class ApplicationViews extends Component {
   state = {
@@ -76,7 +76,11 @@ class ApplicationViews extends Component {
           exact
           path="/"
           render={props => {
+            if (this.isAuthenticated()) {
             return <LocationList locations={this.state.locations} />;
+            } else {
+              return <Redirect to="/login" />
+            }
           }}
         />
         <Route
@@ -90,9 +94,7 @@ class ApplicationViews extends Component {
               location = { id: 404, name: "404", location: "No one" };
             }
 
-            return (
-              <LocationDetails location={location} />
-            );
+            return <LocationDetails location={location} />;
           }}
         />
         <Route
@@ -123,6 +125,7 @@ class ApplicationViews extends Component {
             }
           }}
         />
+
         <Route
           path="/employees/:employeeId(\d+)"
           render={props => {
@@ -143,6 +146,7 @@ class ApplicationViews extends Component {
           exact
           path="/animals"
           render={props => {
+            if (this.isAuthenticated()) {
             return (
               <AnimalList
                 {...props}
@@ -150,6 +154,9 @@ class ApplicationViews extends Component {
                 animals={this.state.animals}
               />
             );
+            } else {
+              return <Redirect to="/login" />
+            }
           }}
         />
         <Route
@@ -175,7 +182,11 @@ class ApplicationViews extends Component {
         <Route
           path="/owners"
           render={props => {
+            if (this.isAuthenticated()) {
             return <OwnerList owners={this.state.owners} />;
+            } else {
+              return <Redirect to="/login" />
+            }
           }}
         />
         <Route path="/login" component={Login} />
