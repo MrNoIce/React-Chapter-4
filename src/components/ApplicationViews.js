@@ -1,4 +1,4 @@
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 import LocationList from "./location/LocationList";
@@ -9,6 +9,7 @@ import OwnerList from "./Owners/ownerList";
 import AnimalManager from "../Modules/AnimalManager";
 import employeeManager from "./employee/employeeManager";
 import AnimalForm from "./Animals/AnimalForm";
+import Login from "./authentication/Login";
 import Employee from "./employee/employeeDetail";
 
 class ApplicationViews extends Component {
@@ -33,7 +34,10 @@ class ApplicationViews extends Component {
       .then(locations => (newState.locations = locations))
       .then(() => this.setState(newState));
   }
+  // Check if credentials are in local storage
+  isAuthenticated = () => sessionStorage.getItem("credentials") !== null;
 
+  //     DELETE ANIMAL FETCHING---
   deleteAnimal = id => {
     return fetch(`http://localhost:5002/animals/${id}`, {
       method: "DELETE"
@@ -44,7 +48,7 @@ class ApplicationViews extends Component {
         this.setState({ animals: animals });
       });
   };
-
+  //       DELETING EMPLOYEES---
   fireEmployee = id => {
     return fetch(`http://localhost:5002/employees/${id}`, {
       method: "DELETE"
@@ -55,7 +59,7 @@ class ApplicationViews extends Component {
         this.setState({ employees: employees });
       });
   };
-
+  // ADDING THE NEW PETS INTO THE APP
   addAnimal = animal =>
     AnimalManager.post(animal)
       .then(() => AnimalManager.getAll())
@@ -64,7 +68,6 @@ class ApplicationViews extends Component {
           animals: animals
         })
       );
-
   render() {
     return (
       <React.Fragment>
@@ -87,15 +90,20 @@ class ApplicationViews extends Component {
             );
           }}
         />
-        <Route exact
+        <Route
+          exact
           path="/employees"
           render={props => {
-            return (
-              <EmployeeList
-                fireEmployee={this.fireEmployee}
-                employees={this.state.employees}
-              />
-            );
+            if (this.isAuthenticated()) {
+              return (
+                <EmployeeList
+                  deleteEmployee={this.deleteEmployee}
+                  employees={this.state.employees}
+                />
+              );
+            } else {
+              return <Redirect to="/login" />;
+            }
           }}
         />
         <Route
@@ -153,6 +161,7 @@ class ApplicationViews extends Component {
             return <OwnerList owners={this.state.owners} />;
           }}
         />
+        <Route path="/login" component={Login} />
       </React.Fragment>
     );
   }

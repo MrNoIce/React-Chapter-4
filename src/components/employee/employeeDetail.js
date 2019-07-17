@@ -5,7 +5,7 @@ export default class Employee extends Component {
   state = {
     saveDisabled: false
   };
-
+//  DETAIL BUTTON EVENT HANDLER
   render() {
     return (
       <section className="employee">

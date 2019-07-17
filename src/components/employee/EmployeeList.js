@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./employee.css";
 
+//          EMPLOYEE LIST TAB DISPLAT HANDLER----
+
 export default class EmployeeList extends Component {
+
   render() {
     return (
       <section className="employees">
