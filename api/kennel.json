@@ -85,22 +85,30 @@
     {
       "id": 1,
       "name": "Terry Tomlin",
-      "phone": "615-668-9954"
+      "phone": "615-668-9954",
+      "social": "666-66-6666",
+      "address": "1919 SeventySeventh st"
     },
     {
       "id": 2,
       "name": "Susan Susie",
-      "phone": "615-668-9954"
+      "phone": "615-668-9954",
+      "social": "666-66-6666",
+      "address": "1919 SeventySeventh st"
     },
     {
       "id": 3,
       "name": "Jack Jackson",
-      "phone": "615-668-9954"
+      "phone": "615-668-9954",
+      "social": "666-66-6666",
+      "address": "1919 SeventySeventh st"
     },
     {
       "id": 4,
       "name": "Sally Sindy",
-      "phone": "615-668-9954"
+      "phone": "615-668-9954",
+      "social": "666-66-6666",
+      "address": "1919 SeventySeventh st"
     }
   ]
 }
