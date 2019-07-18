@@ -14,6 +14,7 @@ import Employee from "./employee/employeeDetail";
 import LocationDetails from "./location/LocationDetails";
 import OwnerDetails from "./Owners/OwnerDetails";
 import OwnerManager from "./Owners/OwnerManager";
+import AnimalEditForm from "./Animals/AnimalEditForm";
 
 class ApplicationViews extends Component {
   state = {
@@ -71,6 +72,15 @@ class ApplicationViews extends Component {
           animals: animals
         })
       );
+  updateAnimal = editedAnimalObject => {
+    return AnimalManager.put(editedAnimalObject)
+      .then(() => AnimalManager.getAll())
+      .then(animals => {
+        this.setState({
+          animals: animals
+        });
+      });
+  };
   render() {
     return (
       <React.Fragment>
@@ -119,7 +129,9 @@ class ApplicationViews extends Component {
               return (
                 <EmployeeList
                   deleteEmployee={this.deleteEmployee}
+                  animals={this.state.animals}
                   employees={this.state.employees}
+                  {...props}
                 />
               );
             } else {
@@ -162,26 +174,32 @@ class ApplicationViews extends Component {
           }}
         />
         <Route
+          exact
           path="/animals/:animalId(\d+)"
           render={props => {
-            // Find the animal with the id of the route parameter
-            let animal = this.state.animals.find(
-              animal => animal.id === parseInt(props.match.params.animalId)
-            );
-            // If the animal wasn't found, create a default one
-            if (!animal) {
-              animal = { id: 404, name: "404", breed: "Dog not found" };
-            }
-
             return (
               <AnimalDetail
-                animal={animal}
-                dischargeAnimal={this.deleteAnimal}
+                {...props}
+                deleteAnimal={this.deleteAnimal}
+                animals={this.state.animals}
               />
             );
           }}
         />
-        <Route exact
+        <Route
+          path="/animals/:animalId(\d+)/edit"
+          render={props => {
+            return (
+              <AnimalEditForm
+                {...props}
+                employees={this.state.employees}
+                updateAnimal={this.updateAnimal}
+              />
+            );
+          }}
+        />
+        <Route
+          exact
           path="/owners"
           render={props => {
             if (this.isAuthenticated()) {
@@ -200,7 +218,7 @@ class ApplicationViews extends Component {
             if (!owner) {
               owner = { id: 404, name: "404", owner: "No one" };
             }
-              return <OwnerDetails owner={owner} />;
+            return <OwnerDetails owner={owner} />;
           }}
         />
         <Route path="/login" component={Login} />

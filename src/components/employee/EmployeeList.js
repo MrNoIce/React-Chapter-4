@@ -1,31 +1,34 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import "./employee.jpg"
-import "./employee.css";
-
-//          EMPLOYEE LIST TAB DISPLAT HANDLER----
+//import person from "./person.png";
+//import "./Employee.css";
+import AnimalCard from "../Animals/animalCard";
 
 export default class EmployeeList extends Component {
-
   render() {
     return (
       <section className="employees">
         {this.props.employees.map(employee => (
-          <div key={employee.id} className="card">
+          <div key={employee.id} className="card card--employee">
             <div className="card-body">
               <div className="card-title">
-                <img src={employee.jpg} className="icon--dog" alt="dog" />
+                {/* <img src={person} className="icon--employee" /> */}
                 <h5>{employee.name}</h5>
-                <Link className="nav-link" to={`/employees/${employee.id}`}>
-                  Details
-                </Link>
-
-                <button
-                  onClick={() => this.props.fireEmployee(employee.id)}
+                <a
+                  href="#"
+                  onClick={() => this.props.deleteEmployee(employee.id)}
                   className="card-link"
                 >
-                  FIRED
-                </button>
+                  Delete
+                </a>
+              </div>
+
+              <h6 class="card-subtitle mb-2 text-muted">Caretaker For</h6>
+              <div className="animals--caretaker">
+                {this.props.animals
+                  .filter(anml => anml.employeeId === employee.id)
+                  .map(anml => (
+                    <AnimalCard key={anml.id} animal={anml} {...this.props} />
+                  ))}
               </div>
             </div>
           </div>
