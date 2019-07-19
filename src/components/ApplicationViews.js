@@ -13,7 +13,6 @@ import Login from "./authentication/Login";
 import Employee from "./employee/employeeDetail";
 import LocationDetails from "./location/LocationDetails";
 import OwnerDetails from "./Owners/OwnerDetails";
-import OwnerManager from "./Owners/OwnerManager";
 import AnimalEditForm from "./Animals/AnimalEditForm";
 
 class ApplicationViews extends Component {
@@ -177,11 +176,14 @@ class ApplicationViews extends Component {
           exact
           path="/animals/:animalId(\d+)"
           render={props => {
+            let animal = this.state.animals.find(
+              animal => animal.id === parseInt(props.match.params.animalId)
+            ); 
             return (
               <AnimalDetail
                 {...props}
                 deleteAnimal={this.deleteAnimal}
-                animals={this.state.animals}
+                animal={animal}
               />
             );
           }}
