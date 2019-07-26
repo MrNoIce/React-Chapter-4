@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactMapGL, { NavigationControl } from "react-map-gl";
+import 'mapbox-gl/dist/mapbox-gl.css';
 const TOKEN =
   "pk.eyJ1IjoiamFrZXNjb3R0MSIsImEiOiJjanlrYjdqYmMwY3FhM2RsaTA4bHh5cjlvIn0.A41L1WQrcE5OVqQfc_-bbw";
 const navStyle = {
@@ -24,11 +25,15 @@ class Map extends Component {
     };
   }
   render() {
-    const { viewport } = this.state.viewport;
+    const { viewport } = this.state;
     return (
       <ReactMapGL
         {...viewport}
         mapStyle="mapbox://styles/mapbox/dark-v9"
+        containerStyle={{
+            height: '100vh',
+            width: '100vw'
+          }}
         mapboxApiAccessToken={TOKEN}
       >
         <div className="nav" style={navStyle}>

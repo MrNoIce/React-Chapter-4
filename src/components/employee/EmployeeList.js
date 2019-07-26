@@ -22,7 +22,7 @@ export default class EmployeeList extends Component {
                 </a>
               </div>
 
-              <h6 class="card-subtitle mb-2 text-muted">Caretaker For</h6>
+              <h6 className="card-subtitle mb-2 text-muted">Caretaker For</h6>
               <div className="animals--caretaker">
                 {this.props.animals
                   .filter(anml => anml.employeeId === employee.id)

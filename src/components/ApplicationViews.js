@@ -22,6 +22,7 @@ class ApplicationViews extends Component {
     animals: [],
     employees: [],
     owners: [],
+    map: []
   };
 
   componentDidMount() {
@@ -215,13 +216,7 @@ class ApplicationViews extends Component {
         <Route
           exact
           path="/mappie"
-          render={props => {
-            if (this.isAuthenticated()) {
-              return <Map map={this.state.map} />;
-            } else {
-              return <Redirect to="/login" />;
-            }
-          }}
+          component={Map}
         />
         <Route
           path="/owners/:ownerId(\d+)"
