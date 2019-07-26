@@ -14,13 +14,14 @@ import Employee from "./employee/employeeDetail";
 import LocationDetails from "./location/LocationDetails";
 import OwnerDetails from "./Owners/OwnerDetails";
 import AnimalEditForm from "./Animals/AnimalEditForm";
+import Map from "./mappie/mappie"
 
 class ApplicationViews extends Component {
   state = {
     locations: [],
     animals: [],
     employees: [],
-    owners: []
+    owners: [],
   };
 
   componentDidMount() {
@@ -178,7 +179,7 @@ class ApplicationViews extends Component {
           render={props => {
             let animal = this.state.animals.find(
               animal => animal.id === parseInt(props.match.params.animalId)
-            ); 
+            );
             return (
               <AnimalDetail
                 {...props}
@@ -206,6 +207,17 @@ class ApplicationViews extends Component {
           render={props => {
             if (this.isAuthenticated()) {
               return <OwnerList owners={this.state.owners} />;
+            } else {
+              return <Redirect to="/login" />;
+            }
+          }}
+        />
+        <Route
+          exact
+          path="/mappie"
+          render={props => {
+            if (this.isAuthenticated()) {
+              return <Map map={this.state.map} />;
             } else {
               return <Redirect to="/login" />;
             }
